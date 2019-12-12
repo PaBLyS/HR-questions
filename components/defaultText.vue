@@ -17,7 +17,6 @@
 
 <style lang="scss" scoped>
   .text-wrap {
-    width: 100%;
     background: #dcdcdc;
     padding: 30px;
   }
