@@ -17,7 +17,11 @@
 
 <style lang="scss" scoped>
   .text-wrap {
-    background: #dcdcdc;
+    color: #fff;
+    background: #22b2ea;
     padding: 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    margin-top: 30px;
   }
 </style>

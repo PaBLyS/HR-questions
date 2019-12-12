@@ -41,6 +41,10 @@
 </script>
 
 <style lang="scss">
+  body {
+    background: #d8d8d8;
+  }
+  
   .wrap {
     margin: {
       top: 10px

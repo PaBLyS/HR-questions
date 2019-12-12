@@ -34,20 +34,29 @@
     &-wrap {
       min-width: 30%;
       max-width: 50%;
-      margin: 5px 10px;
+      margin: 10px 5px;
     }
 
     &-label {
       text-align: center;
-      background: #965f5e;
+      color: #fff;
+      background: #42445a;
+      padding: 5px 10px;
+      font-size: 18px;
+      font-weight: bold;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      cursor: pointer;
     }
 
     &-answer {
       overflow: hidden;
+      border: 1px solid #42445a;
+      padding: 5px 10px;
 
       &-close {
         height: 0;
-
+        padding: 0;
       }
     }
   }
