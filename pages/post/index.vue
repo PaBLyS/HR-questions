@@ -92,6 +92,7 @@
       }
 
       &-button {
+        min-width: 120px;
         margin-right: 15px;
         padding: 5px 10px;
         color: #FFF;
