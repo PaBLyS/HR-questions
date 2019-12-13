@@ -55,6 +55,8 @@
 
 <style lang="scss" scoped>
   .home {
+    min-height: 100vh;
+    background: linear-gradient(125.42deg, #FFFFFF 0%, #DADADA 100%);
     padding: {
       top: 115px;
     }
