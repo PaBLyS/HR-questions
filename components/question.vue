@@ -1,7 +1,9 @@
 <template>
-  <b-col cols="6" class="question-wrap">
-    <div class="question-label" @click="status = !status">{{question}}</div>
-    <div :class="classAnswer">{{answer}}</div>
+  <b-col cols="6">
+    <div class="question-wrap">
+      <div class="question-label" @click="status = !status">{{question}}</div>
+      <div :class="classAnswer">{{answer}}</div>
+    </div>
   </b-col>
 </template>
 <script>
@@ -31,25 +33,35 @@
   .question {
 
     &-wrap {
-      margin: 10px 0;
+      margin: 25px 0;
     }
 
     &-label {
-      text-align: center;
-      color: #fff;
-      background: #42445a;
-      padding: 10px;
-      font-size: 18px;
+      font-family: 'Roboto', sans-serif;
+      font-style: normal;
       font-weight: bold;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      font-size: 22px;
+      line-height: 45px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.02em;
+      color: #4F4F4F;
       cursor: pointer;
+      background: #F4F4F4;
+      box-shadow: 7px 7px 40px rgba(0, 0, 0, 0.2), -7px -7px 40px rgba(255, 255, 255, 0.35), inset 4px 4px 20px rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+      padding: 10px 20px;
     }
 
     &-answer {
+      font-family: 'Roboto', sans-serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 22px;
+      color: #4F4F4F;
       overflow: hidden;
-      border: 1px solid #42445a;
-      padding: 5px 10px;
+      padding: 10px;
 
       &-close {
         height: 0;

@@ -71,13 +71,13 @@
       text-indent: 20px;
       color: #4F4F4F;
       background: #F4F4F4;
-      box-shadow: 15px 15px 80px rgba(0, 0, 0, 0.42), -15px -15px 80px rgba(255, 255, 255, 0.7), inset 4px 4px 20px rgba(255, 255, 255, 0.25);
+      box-shadow: 7px 7px 40px rgba(0, 0, 0, 0.2), -7px -7px 40px rgba(255, 255, 255, 0.35), inset 4px 4px 20px rgba(255, 255, 255, 0.25);
       border-radius: 10px;
     }
 
     &__elem {
       background: #F4F4F4;
-      box-shadow: 15px 15px 80px rgba(0, 0, 0, 0.42), -15px -15px 80px rgba(255, 255, 255, 0.7), inset 4px 4px 20px rgba(255, 255, 255, 0.25);
+      box-shadow: 7px 7px 40px rgba(0, 0, 0, 0.2), -7px -7px 40px rgba(255, 255, 255, 0.35), inset 4px 4px 20px rgba(255, 255, 255, 0.25);
       border-radius: 10px;
       margin: 60px 0;
       padding: 20px;

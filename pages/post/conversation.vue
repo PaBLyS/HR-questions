@@ -1,9 +1,19 @@
 <template>
-  <section>
+  <section class="conversation">
     <b-container>
+      <b-row>
+        <b-col cols="1">
+          <nuxt-link to="/post" class="arrow">
+            <img src="/arrow.png"><span class="arrow__text">BACK</span>
+          </nuxt-link>
+        </b-col>
+      </b-row>
       <default-text :default-text="post.content[0]"/>
       <b-row>
-        <question v-for="(elem, index) in post.question" :question="elem.label" :answer="elem.answer" :key="'question' + index"/>
+        <question v-for="(elem, index) in post.question"
+                  :question="elem.label"
+                  :answer="elem.answer"
+                  :key="'question' + index"/>
       </b-row>
       <default-text :default-text="post.content[1]"/>
     </b-container>
@@ -31,6 +41,25 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .arrow {
+    margin: 40px 0;
+    display: flex;
+    align-items: center;
 
+    &__text {
+      font-family: 'Roboto', sans-serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      color: #828282;
+      margin-left: 10px;
+    }
+  }
+
+  .conversation {
+    min-height: 100vh;
+    background: linear-gradient(125.42deg, #FFFFFF 0%, #DADADA 100%);
+  }
 </style>

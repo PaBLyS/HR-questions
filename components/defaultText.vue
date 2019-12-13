@@ -1,7 +1,7 @@
 <template>
-    <b-row class="text-wrap">
+    <b-row>
       <b-col cols="12">
-        {{defaultText}}
+        <div class="text-wrap">{{defaultText}}</div>
       </b-col>
     </b-row>
 </template>
@@ -17,11 +17,15 @@
 
 <style lang="scss" scoped>
   .text-wrap {
-    color: #42445a;
-    background: #bebebe;
-    padding: 30px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: normal;
     font-size: 18px;
-    border-radius: 5px;
-    margin-top: 30px;
+    line-height: 22px;
+    color: #4F4F4F;
+    background: #F4F4F4;
+    box-shadow: 7px 7px 40px rgba(0, 0, 0, 0.2), -7px -7px 40px rgba(255, 255, 255, 0.35), inset 4px 4px 20px rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    padding: 20px;
   }
 </style>

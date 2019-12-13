@@ -51,9 +51,9 @@
       flex-direction: column;
       justify-content: space-between;
       width: 555px;
-      height: 547px;
+      height: 470px;
       background: #F4F4F4;
-      box-shadow: 30px 30px 80px rgba(0, 0, 0, 0.5), -30px -30px 80px #FFFFFF, inset 4px 4px 20px rgba(255, 255, 255, 0.25);
+      box-shadow: 7px 7px 40px rgba(0, 0, 0, 0.2), -7px -7px 40px rgba(255, 255, 255, 0.35), inset 4px 4px 20px rgba(255, 255, 255, 0.25);
       border-radius: 30px;
       padding: 65px 30px;
 
@@ -72,7 +72,7 @@
         border: 1px solid #BDBDBD;
         border-radius: 10px;
         background: transparent;
-        padding: 13px 10px;
+        padding: 22px 10px;
         font-family: 'Roboto', sans-serif;
         font-style: normal;
         font-weight: 500;
