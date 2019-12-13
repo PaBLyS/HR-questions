@@ -17,8 +17,8 @@
 
 <style lang="scss" scoped>
   .text-wrap {
-    color: #fff;
-    background: #22b2ea;
+    color: #42445a;
+    background: #bebebe;
     padding: 30px;
     font-size: 18px;
     border-radius: 5px;

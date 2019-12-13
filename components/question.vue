@@ -1,10 +1,9 @@
 <template>
-  <b-col class="question-wrap">
+  <b-col cols="6" class="question-wrap">
     <div class="question-label" @click="status = !status">{{question}}</div>
     <div :class="classAnswer">{{answer}}</div>
   </b-col>
 </template>
-
 <script>
     export default {
         name: "question",
@@ -32,16 +31,14 @@
   .question {
 
     &-wrap {
-      min-width: 30%;
-      max-width: 50%;
-      margin: 10px 5px;
+      margin: 10px 0;
     }
 
     &-label {
       text-align: center;
       color: #fff;
       background: #42445a;
-      padding: 5px 10px;
+      padding: 10px;
       font-size: 18px;
       font-weight: bold;
       border-top-left-radius: 5px;

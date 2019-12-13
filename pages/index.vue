@@ -9,12 +9,13 @@
     </b-row>
     <default-text :default-text="content[0]"/>
     <b-row>
-      <question :question="question[0].label" :answer="question[0].answer" />
-      <question :question="question[0].label" :answer="question[0].answer" />
-      <question :question="question[0].label" :answer="question[0].answer" />
-      <question :question="question[0].label" :answer="question[0].answer" />
-      <question :question="question[0].label" :answer="question[0].answer" />
+      <question :question="question[0].label" :answer="question[0].answer"/>
+      <question :question="question[0].label" :answer="question[0].answer"/>
+      <question :question="question[0].label" :answer="question[0].answer"/>
+      <question :question="question[0].label" :answer="question[0].answer"/>
+      <question :question="question[0].label" :answer="question[0].answer"/>
     </b-row>
+    <default-text :default-text="content[0]"/>
   </b-container>
 </template>
 
@@ -44,7 +45,7 @@
   body {
     background: #d8d8d8;
   }
-  
+
   .wrap {
     margin: {
       top: 10px
