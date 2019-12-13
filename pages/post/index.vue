@@ -1,12 +1,30 @@
 <template>
-  <section>
-    <div>
-      <div v-for="(elem, index) in post">
-        <div>{{elem.label}}</div>
-        <div @click="goText(index, 'talk')">Телефонна розмова</div>
-        <div @click="goText(index, 'interview')">Співбесіда</div>
-      </div>
-    </div>
+  <section class="home">
+    <b-container>
+      <b-row>
+        <b-col cols="12">
+          <div class="home__label">Открытые вакансии</div>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="6"
+               v-for="(elem, index) in post">
+          <div class="home__elem">
+            <div class="home__elem-label">{{elem.label}}</div>
+            <div class="home__elem-button-wrap">
+              <div @click="goText(index, 'talk')"
+                   class="home__elem-button call">
+                <img src="call.png">CALL
+              </div>
+              <div @click="goText(index, 'interview')"
+                   class="home__elem-button interview">
+                <img src="interview.png">Interview
+              </div>
+            </div>
+          </div>
+        </b-col>
+      </b-row>
+    </b-container>
   </section>
 </template>
 
@@ -14,8 +32,7 @@
     export default {
         name: "index",
         data() {
-            return {
-            }
+            return {}
         },
         computed: {
             post() {
@@ -36,6 +53,73 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .home {
+    padding: {
+      top: 115px;
+    }
 
+    &__label {
+      padding: 19px 0;
+      font-family: 'Roboto', sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 36px;
+      line-height: 42px;
+      display: flex;
+      align-items: center;
+      text-indent: 20px;
+      color: #4F4F4F;
+      background: #F4F4F4;
+      box-shadow: 15px 15px 80px rgba(0, 0, 0, 0.42), -15px -15px 80px rgba(255, 255, 255, 0.7), inset 4px 4px 20px rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+    }
+
+    &__elem {
+      background: #F4F4F4;
+      box-shadow: 15px 15px 80px rgba(0, 0, 0, 0.42), -15px -15px 80px rgba(255, 255, 255, 0.7), inset 4px 4px 20px rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+      margin: 60px 0;
+      padding: 20px;
+
+      &-label {
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        letter-spacing: 0.02em;
+        color: #4F4F4F;
+      }
+
+      &-button {
+        margin-right: 15px;
+        padding: 5px 10px;
+        color: #FFF;
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 42px;
+        border-radius: 10px;
+        cursor: pointer;
+
+        img {
+          margin-right: 5px;
+        }
+
+        &.call {
+          background: #2D9CDB;
+        }
+
+        &.interview {
+          background: #27AE60;
+        }
+
+        &-wrap {
+          display: flex;
+          margin: 10px 0;
+        }
+      }
+    }
+  }
 </style>
