@@ -13,7 +13,7 @@
           <div class="home__elem">
             <div class="home__elem-label">{{elem.label}}</div>
             <div class="home__elem-button-wrap">
-              <div @click="goText(index, 'talk')"
+              <div @click="goText(index, 'call')"
                    class="home__elem-button call">
                 <img src="call.png">CALL
               </div>

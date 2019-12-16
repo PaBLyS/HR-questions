@@ -13,6 +13,8 @@
         <b-col cols="6">
           <div class="conversation__label">
             {{vacLabel}}
+            <span v-if="query.type === 'call'">(Call)</span>
+            <span v-if="query.type === 'interview'">(Interview)</span>
           </div>
         </b-col>
       </b-row>
@@ -51,7 +53,12 @@
         },
         computed: {
             post() {
-                return this.$store.getters.post[this.query.id][this.query.type]
+                if (this.$store.getters.post[this.query.id][this.query.type] === undefined) {
+                    this.$router.push({path: '/post'});
+                }
+                else {
+                    return this.$store.getters.post[this.query.id][this.query.type]
+                }
             },
             vacLabel() {
                 return this.$store.getters.post[this.query.id].label
