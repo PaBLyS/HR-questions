@@ -9,6 +9,13 @@
           </nuxt-link>
         </b-col>
       </b-row>
+      <b-row>
+        <b-col cols="6">
+          <div class="conversation__label">
+            {{vacLabel}}
+          </div>
+        </b-col>
+      </b-row>
       <default-text :default-text="post.content[0]"/>
       <b-row>
         <question v-for="(elem, index) in question"
@@ -45,6 +52,9 @@
         computed: {
             post() {
                 return this.$store.getters.post[this.query.id][this.query.type]
+            },
+            vacLabel() {
+                return this.$store.getters.post[this.query.id].label
             },
             question() {
                 let questionArr = [];
@@ -88,6 +98,19 @@
     min-height: 100vh;
     background: linear-gradient(125.42deg, #FFFFFF 0%, #DADADA 100%);
 
+    &__label {
+      font-family: 'Roboto', sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 32px;
+      line-height: 28px;
+      letter-spacing: 0.02em;
+      color: #4F4F4F;
+      cursor: pointer;
+      padding: 10px 20px;
+      margin-bottom: 30px;
+    }
+
     &__list-button {
       font-family: 'Roboto', sans-serif;
       font-style: normal;
@@ -96,7 +119,8 @@
       line-height: 28px;
       letter-spacing: 0.02em;
       color: #4F4F4F;
-      cursor: pointer;padding: 10px 20px;
+      cursor: pointer;
+      padding: 10px 20px;
       margin-top: 30px;
     }
   }
