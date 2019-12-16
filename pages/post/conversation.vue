@@ -10,7 +10,7 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col cols="6">
+        <b-col cols="12">
           <div class="conversation__label">
             {{vacLabel}}
             <span v-if="query.type === 'call'">(Call)</span>

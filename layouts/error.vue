@@ -5,7 +5,7 @@
       <p class="error__message">{{error.message}}</p>
       <p>
         <nuxt-link to="/">
-          Home
+          Go to Home
         </nuxt-link>
       </p>
     </div>
