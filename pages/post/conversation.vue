@@ -11,7 +11,7 @@
       </b-row>
       <default-text :default-text="post.content[0]"/>
       <b-row>
-        <question v-for="(elem, index) in post.question"
+        <question v-for="(elem, index) in question"
                   :question="elem.label"
                   :answer="elem.answer"
                   :key="'question' + index"/>
@@ -36,6 +36,19 @@
         computed: {
             post() {
                 return this.$store.getters.post[this.query.id][this.query.type]
+            },
+            question() {
+                let questionArr = [];
+
+                this.$store.getters.questions.forEach((elem) => {
+                    this.post.question.forEach((elemId) => {
+                        if (elemId === elem.id) {
+                            questionArr.push(elem);
+                        }
+                    })
+                });
+
+                return questionArr
             }
         },
     }
