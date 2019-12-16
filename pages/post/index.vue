@@ -8,7 +8,8 @@
       </b-row>
       <b-row>
         <b-col cols="6"
-               v-for="(elem, index) in post">
+               v-for="(elem, index) in post"
+               :key="index">
           <div class="home__elem">
             <div class="home__elem-label">{{elem.label}}</div>
             <div class="home__elem-button-wrap">

@@ -1,4 +1,10 @@
 export const state = () => ({
+  user: [
+    {
+      login: 'admin',
+      password: 'qwerty'
+    }
+  ],
   postList: [
     {
       label: 'Developer VueJS',
@@ -88,6 +94,9 @@ export const state = () => ({
 export const getters = {
   post(state) {
     return state.postList;
+  },
+  user(state) {
+    return state.user;
   }
 };
 

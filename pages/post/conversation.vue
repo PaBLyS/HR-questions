@@ -4,7 +4,8 @@
       <b-row>
         <b-col cols="1">
           <nuxt-link to="/post" class="arrow">
-            <img src="/arrow.png"><span class="arrow__text">BACK</span>
+            <img src="/arrow.png">
+            <span class="arrow__text">BACK</span>
           </nuxt-link>
         </b-col>
       </b-row>

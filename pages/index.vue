@@ -7,7 +7,7 @@
              class="index__form-input"
              placeholder="Login">
       <input v-model="password"
-             type="text"
+             type="password"
              class="index__form-input"
              placeholder="Password">
       <div class="index__form-button"
@@ -27,11 +27,17 @@
             }
         },
         methods: {
-            signIn(e) {
-                e.preventDefault();
-                if (this.login === 'admin' && this.password === 'qwerty') {
-                    this.$router.push({path: '/post'});
-                }
+            signIn() {
+                this.users.forEach((elem) => {
+                    if (this.login === elem.login && this.password === elem.password) {
+                        this.$router.push({path: '/post'});
+                    }
+                });
+            }
+        },
+        computed: {
+            users() {
+                return this.$store.getters.user
             }
         }
     }
