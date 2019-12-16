@@ -17,7 +17,8 @@
     "express": "^4.16.4",
     "nuxt": "^2.0.0",
     "sass": "^1.23.7",
-    "sass-loader": "^8.0.0"
+    "sass-loader": "^8.0.0",
+    "consola": "latest"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"

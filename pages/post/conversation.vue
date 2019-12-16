@@ -30,7 +30,6 @@
         components: {defaultText, question},
         data() {
             return {
-                i: 0,
                 query: this.$route.query
             }
         },
@@ -56,6 +55,10 @@
       letter-spacing: 0.02em;
       color: #828282;
       margin-left: 10px;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 
