@@ -41,7 +41,7 @@
       font-style: normal;
       font-weight: bold;
       font-size: 22px;
-      line-height: 45px;
+      line-height: 28px;
       display: flex;
       align-items: center;
       letter-spacing: 0.02em;
