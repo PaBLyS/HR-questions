@@ -20,7 +20,7 @@
       <b-row>
         <b-col cols="3">
           <div class="conversation__list-button">
-            <nuxt-link to="/post/questions">
+            <nuxt-link :to="`/post/questions?id=${query.id}&type=${query.type}`">
               All questions
             </nuxt-link>
           </div>

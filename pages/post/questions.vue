@@ -3,7 +3,7 @@
     <b-container>
       <b-row>
         <b-col cols="1">
-          <nuxt-link to="/post" class="arrow">
+          <nuxt-link :to="`/post/conversation?id=${query.id}&type=${query.type}`" class="arrow">
             <img src="/arrow.png">
             <span class="arrow__text">BACK</span>
           </nuxt-link>
@@ -33,6 +33,7 @@
         components: {defaultText, question},
         data() {
             return {
+                query: this.$route.query
             }
         },
         computed: {
