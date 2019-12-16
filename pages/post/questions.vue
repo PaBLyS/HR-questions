@@ -1,5 +1,5 @@
 <template>
-  <section class="conversation">
+  <section class="questions">
     <b-container>
       <b-row>
         <b-col cols="1">
@@ -9,22 +9,16 @@
           </nuxt-link>
         </b-col>
       </b-row>
-      <default-text :default-text="post.content[0]"/>
+      <b-row>
+        <b-col cols="12">
+          <div class="questions__label">All questions</div>
+        </b-col>
+      </b-row>
       <b-row>
         <question v-for="(elem, index) in question"
                   :question="elem.label"
                   :answer="elem.answer"
                   :key="'question' + index"/>
-      </b-row>
-      <default-text :default-text="post.content[1]"/>
-      <b-row>
-        <b-col cols="3">
-          <div class="conversation__list-button">
-            <nuxt-link to="/post/questions">
-              All questions
-            </nuxt-link>
-          </div>
-        </b-col>
       </b-row>
     </b-container>
   </section>
@@ -35,29 +29,15 @@
     import question from "../../components/question";
 
     export default {
-        name: "conversation",
+        name: "questions",
         components: {defaultText, question},
         data() {
             return {
-                query: this.$route.query
             }
         },
         computed: {
-            post() {
-                return this.$store.getters.post[this.query.id][this.query.type]
-            },
             question() {
-                let questionArr = [];
-
-                this.$store.getters.questions.forEach((elem) => {
-                    this.post.question.forEach((elemId) => {
-                        if (elemId === elem.id) {
-                            questionArr.push(elem);
-                        }
-                    })
-                });
-
-                return questionArr
+                return this.$store.getters.questions
             }
         },
     }
@@ -84,20 +64,24 @@
     }
   }
 
-  .conversation {
+  .questions {
     min-height: 100vh;
     background: linear-gradient(125.42deg, #FFFFFF 0%, #DADADA 100%);
 
-    &__list-button {
+    &__label {
+      padding: 19px 0;
       font-family: 'Roboto', sans-serif;
       font-style: normal;
-      font-weight: bold;
-      font-size: 22px;
-      line-height: 28px;
-      letter-spacing: 0.02em;
+      font-weight: 500;
+      font-size: 36px;
+      line-height: 42px;
+      display: flex;
+      align-items: center;
+      text-indent: 20px;
       color: #4F4F4F;
-      cursor: pointer;padding: 10px 20px;
-      margin-top: 30px;
+      background: #F4F4F4;
+      box-shadow: 7px 7px 40px rgba(0, 0, 0, 0.2), -7px -7px 40px rgba(255, 255, 255, 0.35), inset 4px 4px 20px rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
     }
   }
 </style>
