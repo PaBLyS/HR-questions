@@ -8,7 +8,7 @@
       </b-row>
       <b-row>
         <b-col cols="6"
-               v-for="(elem, index) in post"
+               v-for="(elem, index) in vacancies"
                :key="index">
           <div class="home__elem">
             <div class="home__elem-label">{{elem.label}}</div>
@@ -32,12 +32,15 @@
 <script>
     export default {
         name: "index",
+        beforeCreate() {
+            this.$store.dispatch('fetchVacancies');
+        },
         data() {
             return {}
         },
         computed: {
-            post() {
-                return this.$store.getters.post
+            vacancies() {
+                return this.$store.getters.vacancies
             }
         },
         methods: {

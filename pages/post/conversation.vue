@@ -1,6 +1,7 @@
 <template>
+
   <section class="conversation">
-    <b-container>
+    <b-container v-if="status">
       <b-row>
         <b-col cols="1">
           <nuxt-link to="/post" class="arrow">
@@ -18,14 +19,15 @@
           </div>
         </b-col>
       </b-row>
-      <default-text :default-text="post.content[0]"/>
+      <default-text :default-text="vacancies.content[0]"/>
       <b-row>
         <question v-for="(elem, index) in question"
                   :question="elem.label"
                   :answer="elem.answer"
-                  :key="'question' + index"/>
+                  :key="'question' + index"
+                  v-if="visible(elem.id)"/>
       </b-row>
-      <default-text :default-text="post.content[1]"/>
+      <default-text :default-text="vacancies.content[1]"/>
       <b-row>
         <b-col cols="3">
           <div class="conversation__list-button">
@@ -36,47 +38,63 @@
         </b-col>
       </b-row>
     </b-container>
+
+    <loader v-else/>
+
   </section>
 </template>
 
 <script>
     import defaultText from "../../components/defaultText";
     import question from "../../components/question";
+    import loader from "../../components/loader"
 
     export default {
         name: "conversation",
-        components: {defaultText, question},
+        components: {defaultText, question, loader},
+        beforeCreate() {
+            this.$store.dispatch('fetchVacancies');
+            this.$store.dispatch('fetchQuestions');
+        },
         data() {
             return {
                 query: this.$route.query
             }
         },
         computed: {
-            post() {
-                if (this.$store.getters.post[this.query.id][this.query.type] === undefined) {
+            status() {
+                let status = true;
+
+                return status;
+            },
+            vacancies() {
+                if (this.$store.getters.vacancies[this.query.id][this.query.type] === undefined) {
                     this.$router.push({path: '/post'});
-                }
-                else {
-                    return this.$store.getters.post[this.query.id][this.query.type]
+                } else {
+                    return this.$store.getters.vacancies[this.query.id][this.query.type]
                 }
             },
             vacLabel() {
-                return this.$store.getters.post[this.query.id].label
+                return this.$store.getters.vacancies[this.query.id].label
             },
             question() {
-                let questionArr = [];
-
-                this.$store.getters.questions.forEach((elem) => {
-                    this.post.question.forEach((elemId) => {
-                        if (elemId === elem.id) {
-                            questionArr.push(elem);
-                        }
-                    })
-                });
-
-                return questionArr
+                return this.$store.getters.questions
             }
         },
+        methods: {
+
+            visible(id) {
+                let status = false;
+
+                this.vacancies.question.forEach(elem => {
+                    if (elem === id) {
+                        status = true;
+                    }
+                });
+
+                return status
+            }
+        }
     }
 </script>
 
