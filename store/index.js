@@ -51,5 +51,22 @@ export const actions = {
         context.commit('loadQuestions', response);
       });
   },
+  fetchEditQuestions(context, elem) {
+    fetch(`http://127.0.0.1:8080/questions/${elem.id}`, {
+      method: 'POST',
+      body: JSON.stringify(elem)
+    })
+      .then((response) => response.json())
+      .then(response => console.log('Finish', response))
+      .catch(err => console.error(err));
+  },
+  fetchDeleteQuestions(context, elem) {
+    fetch(`http://127.0.0.1:8080/questions/${elem.id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => response.json())
+      .then(response => console.log('Finish'))
+      .catch(err => console.error(err));
+  },
 };
 

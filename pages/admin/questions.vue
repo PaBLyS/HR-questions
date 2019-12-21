@@ -1,6 +1,9 @@
 <template>
   <section class="edit-questions">
-    <b-container>
+
+    <loader v-if="status"/>
+
+    <b-container v-else >
       <b-row>
         <b-col>
           <div>
@@ -15,41 +18,44 @@
             </div>
           </div>
         </b-col>
-        <b-col cols="12" >
+        <b-col cols="12">
           <div v-for="(elem, index) in editQuestion" :key="index">
-            <div>
-              <input type="text" :value="elem.label">
-              <b-button-group>
-                <b-button variant="success">Save</b-button>
-                <b-button variant="danger">Delete</b-button>
-              </b-button-group>
-            </div>
-            <div>
-              <textarea></textarea>
-            </div>
+            <question :id="index"
+                      :label="elem.label"
+                      :answer="elem.answer"/>
           </div>
         </b-col>
       </b-row>
     </b-container>
+
+
   </section>
 </template>
 
 <script>
+
+    import question from "../../components/admin/question";
+    import loader from "../../components/loader";
+
     export default {
         name: "questions",
+        components: {question, loader},
         beforeCreate() {
             this.$store.dispatch('fetchQuestions');
         },
-        beforeMount() {
-            this.editQuestion = this.$store.getters.questions;
+        beforeUpdate() {
+            this.$store.dispatch('fetchQuestions');
         },
         data() {
-          return {
-              editQuestion: []
-          }
+            return {}
         },
         computed: {
-
+            editQuestion() {
+                return [...this.$store.getters.questions]
+            },
+            status() {
+                return this.editQuestion.length === 0;
+            }
         },
     }
 </script>
