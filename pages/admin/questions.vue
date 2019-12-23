@@ -5,11 +5,17 @@
 
     <b-container v-else>
       <b-row>
+        <b-col cols="12" class="edit-questions__label">
+          All questions
+        </b-col>
+      </b-row>
+      <b-row>
         <b-col>
-          <div>
-            <div>
-              <input type="text"
-                     v-model="newQuestions.label">
+          <div class="edit-questions__wrap">
+            <div class="edit-questions__wrap-top">
+              <span>
+                Label
+              </span>
               <b-button-group>
                 <b-button variant="success"
                           @click="addUpload(newQuestions)">
@@ -18,7 +24,12 @@
               </b-button-group>
             </div>
             <div>
-              <textarea v-model="newQuestions.answer"></textarea>
+              <input type="text"
+                     v-model="newQuestions.label"
+                     class="edit-questions__wrap-input">
+              <p class="edit-questions__wrap-content">Content</p>
+              <textarea v-model="newQuestions.answer"
+                        class="edit-questions__wrap-input textarea"></textarea>
             </div>
           </div>
         </b-col>
@@ -79,6 +90,57 @@
     background: linear-gradient(125.42deg, #FFFFFF 0%, #DADADA 100%);
     padding: {
       top: 115px;
+    }
+
+    &__label {
+      padding: 19px 0;
+      margin-bottom: 30px;
+      font-family: 'Roboto', sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 36px;
+      line-height: 42px;
+      display: flex;
+      align-items: center;
+      text-indent: 20px;
+      color: #4F4F4F;
+      background: #F4F4F4;
+      box-shadow: 7px 7px 40px rgba(0, 0, 0, 0.2), -7px -7px 40px rgba(255, 255, 255, 0.35), inset 4px 4px 20px rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+    }
+
+    &__wrap {
+      padding: 25px;
+      margin-bottom: 30px;
+      font-family: 'Roboto', sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 42px;
+      color: #4F4F4F;
+      background: #F4F4F4;
+      box-shadow: 7px 7px 40px rgba(0, 0, 0, 0.2), -7px -7px 40px rgba(255, 255, 255, 0.35), inset 4px 4px 20px rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+
+      &-top {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &-input {
+        width: 100%;
+        margin: 10px 0;
+        font-size: 18px;
+        line-height: 30px;
+
+        &.textarea {
+          min-height: 150px;
+        }
+      }
+
+      &-content {
+        margin: 10px 0 0 0;
+      }
     }
   }
 </style>
