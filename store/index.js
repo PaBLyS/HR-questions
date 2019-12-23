@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 export const state = () => ({
   user: [
     {
@@ -39,33 +41,35 @@ export const mutations = {
 export const actions = {
   fetchVacancies(context) {
     fetch('http://127.0.0.1:8080/vacancies')
-      .then((response) => response.json())
-      .then((response) => {
-        context.commit('loadVacancies', response);
+      .then((res) => res.json())
+      .then((res) => {
+        context.commit('loadVacancies', res.data);
       });
   },
+
+
+  // Questions methods
   fetchQuestions(context) {
-    fetch('http://127.0.0.1:8080/questions')
-      .then((response) => response.json())
-      .then((response) => {
-        context.commit('loadQuestions', response);
+    axios.get('http://127.0.0.1:8080/questions')
+      .then((res) => {
+        context.commit('loadQuestions', res.data);
       });
   },
-  fetchEditQuestions(context, elem) {
-    fetch(`http://127.0.0.1:8080/questions/${elem.id}`, {
-      method: 'POST',
-      body: JSON.stringify(elem)
-    })
-      .then((response) => response.json())
-      .then(response => console.log('Finish', response))
+  fetchEditQuestions(context, obj) {
+   axios({
+     method: 'put',
+     url: `http://127.0.0.1:8080/questions/${obj.id}`,
+     data: obj
+   })
+      .then(() => context.dispatch('fetchQuestions'))
       .catch(err => console.error(err));
   },
-  fetchDeleteQuestions(context, elem) {
-    fetch(`http://127.0.0.1:8080/questions/${elem.id}`, {
-      method: 'DELETE'
+  fetchDeleteQuestions(context, obj) {
+    axios({
+      method: 'delete',
+      url: `http://127.0.0.1:8080/questions/${obj.id}`
     })
-      .then((response) => response.json())
-      .then(response => console.log('Finish'))
+      .then(() => context.dispatch('fetchQuestions'))
       .catch(err => console.error(err));
   },
 };

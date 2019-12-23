@@ -43,9 +43,6 @@
         beforeCreate() {
             this.$store.dispatch('fetchQuestions');
         },
-        beforeUpdate() {
-            this.$store.dispatch('fetchQuestions');
-        },
         data() {
             return {}
         },

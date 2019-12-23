@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <input type="text" :value="edit.label">
+      <input type="text" v-model="edit.label">
       <b-button-group>
         <b-button variant="success" @click="editUpload(edit)">Save</b-button>
         <b-button variant="danger" @click="deleteUpload(edit)">Delete</b-button>
@@ -18,13 +18,13 @@
         name: "question",
         props: {
             id: Number,
-            label: String,
-            answer: String,
-        },
-        data() {
-            return {
-                edit: {
-                    id: this.id,
+                    label: String,
+                    answer: String,
+                },
+                data() {
+                    return {
+                        edit: {
+                            id: this.id,
                     label: this.label,
                     answer: this.answer
                 },
@@ -32,11 +32,9 @@
         },
         methods: {
             editUpload(obj) {
-                console.log(obj);
                 this.$store.dispatch('fetchEditQuestions', obj);
             },
             deleteUpload(obj) {
-                console.log(obj);
                 this.$store.dispatch('fetchDeleteQuestions', obj);
             }
         }
