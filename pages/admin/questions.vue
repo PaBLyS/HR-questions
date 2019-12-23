@@ -3,18 +3,22 @@
 
     <loader v-if="status"/>
 
-    <b-container v-else >
+    <b-container v-else>
       <b-row>
         <b-col>
           <div>
             <div>
-              <input type="text">
+              <input type="text"
+                     v-model="newQuestions.label">
               <b-button-group>
-                <b-button variant="success">Add</b-button>
+                <b-button variant="success"
+                          @click="addUpload(newQuestions)">
+                  Add
+                </b-button>
               </b-button-group>
             </div>
             <div>
-              <textarea></textarea>
+              <textarea v-model="newQuestions.answer"></textarea>
             </div>
           </div>
         </b-col>
@@ -47,6 +51,13 @@
             return {}
         },
         computed: {
+            newQuestions() {
+                return {
+                    id: this.editQuestion.length,
+                    label: '',
+                    answer: ''
+                }
+            },
             editQuestion() {
                 return [...this.$store.getters.questions]
             },
@@ -54,6 +65,11 @@
                 return this.editQuestion.length === 0;
             }
         },
+        methods: {
+            addUpload(obj) {
+                this.$store.dispatch('fetchAddQuestions', obj);
+            },
+        }
     }
 </script>
 

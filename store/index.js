@@ -55,6 +55,15 @@ export const actions = {
         context.commit('loadQuestions', res.data);
       });
   },
+  fetchAddQuestions(context, obj) {
+    axios({
+      method: 'post',
+      url: `http://127.0.0.1:8080/questions`,
+      data: obj
+    })
+      .then(() => context.dispatch('fetchQuestions'))
+      .catch(err => console.error(err));
+  },
   fetchEditQuestions(context, obj) {
    axios({
      method: 'put',
