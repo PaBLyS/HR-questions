@@ -10,7 +10,7 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col>
+        <b-col cols="12">
           <div class="edit-questions__wrap">
             <div class="edit-questions__wrap-top">
               <span>
@@ -33,12 +33,11 @@
             </div>
           </div>
         </b-col>
-        <b-col cols="12">
-          <div v-for="(elem, index) in editQuestion" :key="index">
-            <question :id="index"
-                      :label="elem.label"
-                      :answer="elem.answer"/>
-          </div>
+        <b-col cols="6" v-for="(elem, index) in editQuestion" :key="index">
+          <question :id="elem.id"
+                    :index="index"
+                    :label="elem.label"
+                    :answer="elem.answer"/>
         </b-col>
       </b-row>
     </b-container>
@@ -57,6 +56,7 @@
         components: {question, loader},
         beforeCreate() {
             this.$store.dispatch('fetchQuestions');
+            setTimeout(() => console.log(this.editQuestion), 1000);
         },
         data() {
             return {}
@@ -64,7 +64,7 @@
         computed: {
             newQuestions() {
                 return {
-                    id: this.editQuestion.length,
+                    id: this.lastId(),
                     label: '',
                     answer: ''
                 }
@@ -73,13 +73,25 @@
                 return [...this.$store.getters.questions]
             },
             status() {
-                return this.editQuestion.length === 0;
+                return this.editQuestion.length === undefined;
             }
         },
         methods: {
             addUpload(obj) {
                 this.$store.dispatch('fetchAddQuestions', obj);
+
             },
+            lastId() {
+                let maxId = 0;
+
+                this.editQuestion.forEach((elem) => {
+                    if (elem.id > maxId) {
+                        maxId = elem.id;
+                    }
+                });
+
+                return maxId + 1;
+            }
         }
     }
 </script>

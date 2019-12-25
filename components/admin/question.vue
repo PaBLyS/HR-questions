@@ -3,14 +3,14 @@
     <div class="edit-question__wrap">
       <span class="edit-question__wrap-label">Label</span>
       <b-button-group>
-        <b-button variant="success" @click="editUpload(edit)">Save</b-button>
-        <b-button variant="danger" @click="deleteUpload(edit)">Delete</b-button>
+        <b-button variant="success" @click="editUpload()">Save</b-button>
+        <b-button variant="danger" @click="deleteUpload()">Delete</b-button>
       </b-button-group>
     </div>
     <div class="edit-question__wrap-bottom">
-      <input type="text" v-model="edit.label" class="edit-question__wrap-input">
+      <input type="text" v-model="label" class="edit-question__wrap-input">
       <p class="edit-question__wrap-content">Content</p>
-      <textarea v-model="edit.answer" class="edit-question__wrap-input textarea"></textarea>
+      <textarea v-model="answer" class="edit-question__wrap-input textarea"></textarea>
     </div>
   </div>
 </template>
@@ -19,25 +19,30 @@
     export default {
         name: "question",
         props: {
+            index: Number,
             id: Number,
             label: String,
             answer: String,
         },
         data() {
-            return {
-                edit: {
+            return {}
+        },
+        methods: {
+            editUpload() {
+                this.$store.dispatch('fetchEditQuestions', {
                     id: this.id,
                     label: this.label,
                     answer: this.answer
-                },
-            }
-        },
-        methods: {
-            editUpload(obj) {
-                this.$store.dispatch('fetchEditQuestions', obj);
+                });
+
             },
-            deleteUpload(obj) {
-                this.$store.dispatch('fetchDeleteQuestions', obj);
+            deleteUpload() {
+                this.$store.dispatch('fetchDeleteQuestions', {
+                    id: this.id,
+                    label: this.label,
+                    answer: this.answer
+                });
+
             }
         }
     }

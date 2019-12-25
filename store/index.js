@@ -1,5 +1,7 @@
 const axios = require('axios');
 
+const url = 'http://127.0.0.1:8080/';
+
 export const state = () => ({
   user: [
     {
@@ -40,7 +42,7 @@ export const mutations = {
 
 export const actions = {
   fetchVacancies(context) {
-    fetch('http://127.0.0.1:8080/vacancies')
+    fetch(url + 'vacancies')
       .then((res) => res.json())
       .then((res) => {
         context.commit('loadVacancies', res.data);
@@ -50,7 +52,7 @@ export const actions = {
 
   // Questions methods
   fetchQuestions(context) {
-    axios.get('http://127.0.0.1:8080/questions')
+    axios.get(url + 'questions')
       .then((res) => {
         context.commit('loadQuestions', res.data);
       });
@@ -58,7 +60,7 @@ export const actions = {
   fetchAddQuestions(context, obj) {
     axios({
       method: 'post',
-      url: `http://127.0.0.1:8080/questions`,
+      url: `${url}questions`,
       data: obj
     })
       .then(() => context.dispatch('fetchQuestions'))
@@ -67,7 +69,7 @@ export const actions = {
   fetchEditQuestions(context, obj) {
    axios({
      method: 'put',
-     url: `http://127.0.0.1:8080/questions/${obj.id}`,
+     url: `${url}questions/${obj.id}`,
      data: obj
    })
       .then(() => context.dispatch('fetchQuestions'))
@@ -76,7 +78,7 @@ export const actions = {
   fetchDeleteQuestions(context, obj) {
     axios({
       method: 'delete',
-      url: `http://127.0.0.1:8080/questions/${obj.id}`
+      url: `${url}questions/${obj.id}`
     })
       .then(() => context.dispatch('fetchQuestions'))
       .catch(err => console.error(err));
