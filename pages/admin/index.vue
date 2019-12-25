@@ -3,16 +3,20 @@
     <b-container>
       <b-row>
         <b-col cols="12">
-          <div class="admin__row">
-            Questions
-          </div>
+          <nuxt-link to="/admin/questions" class="admin__link">
+            <div class="admin__row">
+              Questions
+            </div>
+          </nuxt-link>
         </b-col>
       </b-row>
       <b-row>
         <b-col cols="12">
-          <div class="admin__row">
-            Vacancies
-          </div>
+          <nuxt-link to="/admin/vacancies" class="admin__link">
+            <div class="admin__row">
+              Vacancies
+            </div>
+          </nuxt-link>
         </b-col>
       </b-row>
     </b-container>
@@ -31,6 +35,12 @@
     background: linear-gradient(125.42deg, #FFFFFF 0%, #DADADA 100%);
     padding: {
       top: 115px;
+    }
+
+    &__link {
+      &:hover {
+        text-decoration: none;
+      }
     }
 
     &__row {
