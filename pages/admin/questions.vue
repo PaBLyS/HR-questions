@@ -64,7 +64,6 @@
         components: {question, loader},
         beforeCreate() {
             this.$store.dispatch('fetchQuestions');
-            setTimeout(() => console.log(this.editQuestion), 1000);
         },
         data() {
             return {}

@@ -41,12 +41,38 @@ export const mutations = {
 };
 
 export const actions = {
+  // Vacancies methods
   fetchVacancies(context) {
-    fetch(url + 'vacancies')
-      .then((res) => res.json())
+    axios.get(url + 'vacancies')
       .then((res) => {
         context.commit('loadVacancies', res.data);
       });
+  },
+  fetchAddVacancies(context, obj) {
+    axios({
+      method: 'post',
+      url: `${url}vacancies`,
+      data: obj
+    })
+      .then(() => context.dispatch('fetchVacancies'))
+      .catch(err => console.error(err));
+  },
+  fetchEditVacancies(context, obj) {
+    axios({
+      method: 'put',
+      url: `${url}vacancies/${obj.id}`,
+      data: obj
+    })
+      .then(() => context.dispatch('fetchVacancies'))
+      .catch(err => console.error(err));
+  },
+  fetchDeleteVacancies(context, obj) {
+    axios({
+      method: 'delete',
+      url: `${url}vacancies/${obj.id}`
+    })
+      .then(() => context.dispatch('fetchVacancies'))
+      .catch(err => console.error(err));
   },
 
 
