@@ -13,7 +13,7 @@
       </b-row>
       <b-row>
         <b-col cols="12" class="vacancies-edit__label">
-          <input type="text">
+          <input type="text" v-model="editVacancies.label">
           <b-button-group>
             <b-button variant="success" @click="editUpload()">Save</b-button>
             <b-button variant="danger" @click="deleteUpload()">Delete</b-button>
@@ -33,17 +33,29 @@
 </template>
 
 <script>
+
     import loader from "../../components/loader";
 
     export default {
         name: "questions-edit",
         components: {loader},
+        beforeCreate() {
+            this.$store.dispatch('fetchVacancies');
+        },
         data() {
-            return {}
+            return {
+                id: this.$route.query.id,
+                editVacancies: {
+                    ...this.vacancies
+                }
+            }
         },
         computed: {
+            vacancies() {
+                return [...this.$store.getters.vacancies][this.id]
+            },
             status() {
-                return false;
+                return this.vacancies === undefined;
             }
         }
     }
