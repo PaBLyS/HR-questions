@@ -19,9 +19,11 @@
       </b-row>
       <b-row>
         <b-col cols="6" v-for="(elem, index) in vacanciesList" :key="`${elem.label}-${index}`">
-          <div class="admin-vacancies__wrap">
-            {{elem.label}}
-          </div>
+          <nuxt-link :to="`/admin/vacancies-edit?id=${index}`">
+            <div class="admin-vacancies__wrap">
+              {{elem.label}}
+            </div>
+          </nuxt-link>
         </b-col>
       </b-row>
     </b-container>
