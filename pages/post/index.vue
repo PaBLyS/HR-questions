@@ -2,7 +2,12 @@
   <section class="home">
     <b-container>
       <b-row>
-        <b-col cols="12">
+        <b-col>
+          <nav-button />
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
           <div class="home__label">Open vacancies</div>
         </b-col>
       </b-row>
@@ -13,14 +18,14 @@
           <div class="home__elem">
             <div class="home__elem-label">{{elem.label}}</div>
             <div class="home__elem-button-wrap">
-              <div @click="goText(index, 'call')"
-                   class="home__elem-button call">
-                <img src="call.png">CALL
-              </div>
-              <div @click="goText(index, 'interview')"
-                   class="home__elem-button interview">
-                <img src="interview.png">Interview
-              </div>
+              <a :href="`/post/conversation?id=${elem.id}&type=call`"
+                  class="home__elem-button call">
+                <img src="/call.png">CALL
+              </a>
+              <a :href="`/post/conversation?id=${elem.id}&type=interview`"
+                  class="home__elem-button interview">
+                <img src="/interview.png">Interview
+              </a>
             </div>
           </div>
         </b-col>
@@ -30,31 +35,43 @@
 </template>
 
 <script>
-    export default {
-        name: "index",
-        beforeCreate() {
-            this.$store.dispatch('fetchVacancies');
-        },
-        data() {
-            return {}
-        },
-        computed: {
-            vacancies() {
-                return this.$store.getters.vacancies
-            }
-        },
-        methods: {
-            goText(index, type) {
-                this.$router.push({
-                    path: 'post/conversation',
-                    query: {
-                        id: index,
-                        type: type
-                    }
-                });
-            }
-        }
+  import navButton from '../../components/navButton'
+  import axios from 'axios'
+
+  export default {
+    name: "index",
+    components: {navButton},
+    async asyncData(param) {
+      let vacancies = await axiosWrap(axios, param, {
+        method: 'get',
+        url: `${param.store.state.url}/vacancies`,
+        data: null
+      })
+
+      return {
+        vacancies: vacancies.data
+      }
+    },
+    data() {
+      return {
+
+      }
+    },
+    computed: {
+
+    },
+    methods: {
+      goText(id, type) {
+        this.$router.push({
+          path: '/post/conversation',
+          query: {
+            id: id,
+            type: type
+          }
+        });
+      }
     }
+  }
 </script>
 
 <style lang="scss" scoped>

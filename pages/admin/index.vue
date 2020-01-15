@@ -2,6 +2,11 @@
   <section class="admin">
     <b-container>
       <b-row>
+        <b-col>
+          <nav-button />
+        </b-col>
+      </b-row>
+      <b-row>
         <b-col cols="12">
           <nuxt-link to="/admin/questions" class="admin__link">
             <div class="admin__row">
@@ -19,14 +24,27 @@
           </nuxt-link>
         </b-col>
       </b-row>
+      <b-row>
+        <b-col cols="12">
+          <nuxt-link to="/admin/user" class="admin__link">
+            <div class="admin__row">
+              User
+            </div>
+          </nuxt-link>
+        </b-col>
+      </b-row>
     </b-container>
   </section>
 </template>
 
 <script>
-    export default {
-        name: "index"
-    }
+  import navButton from '../../components/navButton'
+
+  export default {
+    middleware: 'adminaccess',
+    name: "index",
+    components: {navButton}
+  }
 </script>
 
 <style lang="scss" scoped>

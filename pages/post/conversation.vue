@@ -1,33 +1,25 @@
 <template>
-
   <section class="conversation">
-    <b-container v-if="status">
-      <b-row>
-        <b-col cols="1">
-          <nuxt-link to="/post" class="arrow">
-            <img src="/arrow.png">
-            <span class="arrow__text">BACK</span>
-          </nuxt-link>
-        </b-col>
-      </b-row>
+    <b-container>
+      <arrow url="/post"/>
       <b-row>
         <b-col cols="12">
           <div class="conversation__label">
-            {{vacLabel}}
+            {{vacancies.label}}
             <span v-if="query.type === 'call'">(Call)</span>
             <span v-if="query.type === 'interview'">(Interview)</span>
           </div>
         </b-col>
       </b-row>
-      <default-text :default-text="vacancies.content[0]"/>
+      <default-text :text="vacancies[query.type + 'Content'][0]"/>
       <b-row>
-        <question v-for="(elem, index) in question"
+        <question v-for="(elem, index) in questions"
                   :question="elem.label"
                   :answer="elem.answer"
                   :key="'question' + index"
                   v-if="visible(elem.id)"/>
       </b-row>
-      <default-text :default-text="vacancies.content[1]"/>
+      <default-text :text="vacancies[query.type + 'Content'][1]"/>
       <b-row>
         <b-col cols="3">
           <div class="conversation__list-button">
@@ -38,87 +30,60 @@
         </b-col>
       </b-row>
     </b-container>
-
-    <loader v-else/>
-
   </section>
 </template>
 
 <script>
-    import defaultText from "../../components/defaultText";
-    import question from "../../components/question";
-    import loader from "../../components/loader"
+  import defaultText from "../../components/defaultText";
+  import question from "../../components/question";
+  import arrow from "../../components/arrow";
+  import axios from 'axios';
 
-    export default {
-        name: "conversation",
-        components: {defaultText, question, loader},
-        beforeCreate() {
-            this.$store.dispatch('fetchVacancies');
-            this.$store.dispatch('fetchQuestions');
-        },
-        data() {
-            return {
-                query: this.$route.query
-            }
-        },
-        computed: {
-            status() {
-                let status = true;
+  export default {
+    name: "conversation",
+    components: {defaultText, question, arrow},
+    async asyncData(param) {
+      const vacancies = await axiosWrap(axios, param, {
+        method: 'get',
+        url: `${param.store.state.url}/vacancies`,
+        data: null
+      })
+      const questions = await axiosWrap(axios, param, {
+        method: 'get',
+        url: `${param.store.state.url}/questions`,
+        data: null
+      })
+      
+      return {
+        vacancies: vacancies.data.find(elem => elem.id == param.query.id),
+        questions: questions.data
+      }
+    },
+    data() {
+      return {
+        query: this.$route.query
+      }
+    },
+    computed: {
 
-                return status;
-            },
-            vacancies() {
-                if (this.$store.getters.vacancies[this.query.id][this.query.type] === undefined) {
-                    this.$router.push({path: '/post'});
-                } else {
-                    return this.$store.getters.vacancies[this.query.id][this.query.type]
-                }
-            },
-            vacLabel() {
-                return this.$store.getters.vacancies[this.query.id].label
-            },
-            question() {
-                return this.$store.getters.questions
-            }
-        },
-        methods: {
+    },
+    methods: {
+      visible(id) {
+        let status = false;
 
-            visible(id) {
-                let status = false;
-
-                this.vacancies.question.forEach(elem => {
-                    if (elem === id) {
-                        status = true;
-                    }
-                });
-
-                return status
-            }
-        }
-    }
-</script>
-
-<style lang="scss" scoped>
-  .arrow {
-    margin: 40px 0;
-    display: flex;
-    align-items: center;
-
-    &__text {
-      font-family: 'Roboto', sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 14px;
-      letter-spacing: 0.02em;
-      color: #828282;
-      margin-left: 10px;
-
-      &:hover {
-        text-decoration: none;
+        this.vacancies[this.query.type + 'Questions'].forEach(elem => {
+          if (elem === id) {
+            status = true;
+          }
+        });
+        
+        return status
       }
     }
   }
+</script>
 
+<style lang="scss" scoped>
   .conversation {
     min-height: 100vh;
     background: linear-gradient(125.42deg, #FFFFFF 0%, #DADADA 100%);

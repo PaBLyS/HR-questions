@@ -1,17 +1,7 @@
 <template>
   <section class="edit-questions">
-
-    <loader v-if="status"/>
-
-    <b-container v-else>
-      <b-row>
-        <b-col cols="1">
-          <nuxt-link to="/admin" class="arrow">
-            <img src="/arrow.png">
-            <span class="arrow__text">BACK</span>
-          </nuxt-link>
-        </b-col>
-      </b-row>
+    <b-container>
+      <arrow url="/admin" />
       <b-row>
         <b-col cols="12" class="edit-questions__label">
           All questions
@@ -26,104 +16,96 @@
               </span>
               <b-button-group>
                 <b-button variant="success"
-                          @click="addUpload(newQuestions)">
+                          @click="addUpload()">
                   Add
                 </b-button>
               </b-button-group>
             </div>
             <div>
               <input type="text"
-                     v-model="newQuestions.label"
+                     v-model="label"
                      class="edit-questions__wrap-input">
               <p class="edit-questions__wrap-content">Content</p>
-              <textarea v-model="newQuestions.answer"
+              <textarea v-model="answer"
                         class="edit-questions__wrap-input textarea"></textarea>
             </div>
           </div>
         </b-col>
-        <b-col cols="6" v-for="(elem, index) in editQuestion" :key="index">
+        <b-col cols="6"
+               v-for="(elem, index) in questions"
+               :key="index">
           <question :id="elem.id"
-                    :index="index"
                     :label="elem.label"
                     :answer="elem.answer"/>
         </b-col>
       </b-row>
     </b-container>
-
-
   </section>
 </template>
 
 <script>
+  import question from "../../components/admin/question";
+  import loader from "../../components/loader";
+  import arrow from "../../components/arrow";
+  import axios from 'axios';
 
-    import question from "../../components/admin/question";
-    import loader from "../../components/loader";
+  export default {
+    name: "questions",
+    middleware: 'adminaccess',
+    components: {question, loader, arrow},
+    async asyncData(param) {
+      const questions = await axiosWrap(axios, param, {
+        method: 'get',
+        url: `${param.store.state.url}/questions`,
+        data: null
+      })
+      return {
+        questionsDefault: questions.data
+      }
+    },
+    data() {
+      return {
+        id: null,
+        label: '',
+        answer: ''
+      }
+    },
+    computed: {
+      questions() {
+        return [...this.questionsDefault]
+      }
+    },
+    methods: {
+      addUpload() {
+        axiosWrap(axios, this, {
+          method: 'post',
+          url: `${this.$store.state.url}/questions`,
+          data: {
+            id: this.lastId(),
+            label: this.label,
+            answer: this.answer
+          }
+        })
+          .then(() => console.log('good add'))
+          .catch(err => console.error(err));
+        location.reload()
+      },
+      lastId() {
+        let maxId = 0;
 
-    export default {
-        name: "questions",
-        components: {question, loader},
-        beforeCreate() {
-            this.$store.dispatch('fetchQuestions');
-        },
-        data() {
-            return {}
-        },
-        computed: {
-            newQuestions() {
-                return {
-                    id: this.lastId(),
-                    label: '',
-                    answer: ''
-                }
-            },
-            editQuestion() {
-                return [...this.$store.getters.questions]
-            },
-            status() {
-                return this.editQuestion.length === undefined;
+        this.questions.forEach((elem) => {
+          if (elem.id > maxId) {
+            maxId = elem.id;
             }
-        },
-        methods: {
-            addUpload(obj) {
-                this.$store.dispatch('fetchAddQuestions', obj);
+          });
 
-            },
-            lastId() {
-                let maxId = 0;
-
-                this.editQuestion.forEach((elem) => {
-                    if (elem.id > maxId) {
-                        maxId = elem.id;
-                    }
-                });
-
-                return maxId + 1;
-            }
-        }
-    }
-</script>
-
-<style lang="scss" scoped>
-  .arrow {
-    margin: 40px 0;
-    display: flex;
-    align-items: center;
-
-    &__text {
-      font-family: 'Roboto', sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 14px;
-      letter-spacing: 0.02em;
-      color: #828282;
-      margin-left: 10px;
-
-      &:hover {
-        text-decoration: none;
+        return maxId + 1;
       }
     }
   }
+</script>
 
+<style lang="scss" scoped>
   .edit-questions {
     min-height: 100vh;
     background: linear-gradient(125.42deg, #FFFFFF 0%, #DADADA 100%);

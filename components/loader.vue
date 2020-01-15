@@ -29,6 +29,7 @@
       height: 30px;
       width: 30px;
       animation: load 1s infinite;
+      margin: 100px;
     }
   }
 

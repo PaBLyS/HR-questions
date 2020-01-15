@@ -1,78 +1,106 @@
 <template>
   <section class="admin-vacancies">
-
-    <loader v-if="status"/>
-
-    <b-container v-else>
-      <b-row>
-        <b-col cols="1">
-          <nuxt-link to="/admin" class="arrow">
-            <img src="/arrow.png">
-            <span class="arrow__text">BACK</span>
-          </nuxt-link>
-        </b-col>
-      </b-row>
+    <b-container>
+      <arrow url="/admin" />
       <b-row>
         <b-col cols="12" class="admin-vacancies__label">
           All vacancies
         </b-col>
       </b-row>
       <b-row>
-        <b-col cols="6" v-for="(elem, index) in vacanciesList" :key="`${elem.label}-${index}`">
-          <nuxt-link :to="`/admin/vacancies-edit?id=${index}`">
-            <div class="admin-vacancies__wrap">
-              {{elem.label}}
-            </div>
-          </nuxt-link>
+        <b-col cols="6"
+               v-for="(elem, index) in vacancies"
+               :key="`${elem.label}-${index}`">
+
+          <div class="admin-vacancies__wrap">
+            <a :href="`/admin/vacancies-edit?id=${elem.id}`">
+              <div>{{elem.label}}</div>
+            </a>
+            <b-button-group>
+              <b-button variant="danger" @click="deleteVacancies(elem.id)">Delete</b-button>
+            </b-button-group>
+          </div>
         </b-col>
       </b-row>
-    </b-container>
+      <b-row>
+        <b-col>
+          <b-button-group>
+            <b-button variant="success" @click="addVacancies()">Add</b-button>
+          </b-button-group>
+        </b-col>
+      </b-row>
 
+    </b-container>
   </section>
 </template>
 
 <script>
+  import arrow from "../../components/arrow";
+  import axios from 'axios';
 
-    import loader from "../../components/loader";
+  export default {
+    name: "vacancies",
+    middleware: 'adminaccess',
+    components: {arrow},
+    async asyncData(param) {
+      const vacancies = await axiosWrap(axios, param, {
+        method: 'get',
+        url: `${param.store.state.url}/vacancies`,
+        data: null
+      })
 
-    export default {
-        name: "vacancies",
-        components: {loader},
-        beforeCreate() {
-            this.$store.dispatch('fetchVacancies');
-        },
-        computed: {
-            vacanciesList() {
-                return [...this.$store.getters.vacancies]
-            },
-            status() {
-                return this.vacanciesList.length === undefined;
-            }
-        }
-    }
-</script>
+      return {
+        vacancies: vacancies.data,
+      }
+    },
+    computed: {
 
-<style lang="scss" scoped>
-  .arrow {
-    margin: 40px 0;
-    display: flex;
-    align-items: center;
+    },
+    methods: {
+      addVacancies() {
+        let obj = {
+          id: this.lastId(),
+          label: 'New Vacancies',
+          callContent: ['Text', 'Text'],
+          callQuestion: [],
+          interviewContent: ['Text', 'Text'],
+          interviewQuestion: []
+        };
+        axiosWrap(axios, this, {
+          method: 'post',
+          url: `${this.$store.state.url}/vacancies/`,
+          data: obj
+        })
+          .then(() => console.log('good add vacacntions'))
+          .catch(err => console.error(err));
+        location.reload()
+      },
+      deleteVacancies(id) {
+        axiosWrap(axios, this, {
+          method: 'delete',
+          url: `${this.$store.state.url}/vacancies/${id}`,
+          data: null
+        })
+          .then(() => console.log('vacancies delete'))
+          .catch(err => console.error(err));
+        location.reload()
+      },
+      lastId() {
+        let maxId = 0;
 
-    &__text {
-      font-family: 'Roboto', sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 14px;
-      letter-spacing: 0.02em;
-      color: #828282;
-      margin-left: 10px;
+        this.vacancies.forEach((elem) => {
+          if (elem.id > maxId) {
+            maxId = elem.id;
+          }
+        });
 
-      &:hover {
-        text-decoration: none;
+        return maxId + 1;
       }
     }
   }
+</script>
 
+<style lang="scss" scoped>
   .admin-vacancies {
     min-height: 100vh;
     background: linear-gradient(125.42deg, #FFFFFF 0%, #DADADA 100%);
@@ -95,6 +123,9 @@
     }
 
     &__wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 25px;
       margin-bottom: 30px;
       font-family: 'Roboto', sans-serif;
@@ -106,8 +137,6 @@
       background: #F4F4F4;
       box-shadow: 7px 7px 40px rgba(0, 0, 0, 0.2), -7px -7px 40px rgba(255, 255, 255, 0.35), inset 4px 4px 20px rgba(255, 255, 255, 0.25);
       border-radius: 10px;
-      cursor: pointer;
     }
-
   }
 </style>

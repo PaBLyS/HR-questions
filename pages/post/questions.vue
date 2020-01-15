@@ -1,21 +1,14 @@
 <template>
   <section class="questions">
     <b-container>
-      <b-row>
-        <b-col cols="1">
-          <nuxt-link :to="`/post/conversation?id=${query.id}&type=${query.type}`" class="arrow">
-            <img src="/arrow.png">
-            <span class="arrow__text">BACK</span>
-          </nuxt-link>
-        </b-col>
-      </b-row>
+      <arrow :url="`/post/conversation?id=${query.id}&type=${query.type}`"/>
       <b-row>
         <b-col cols="12">
           <div class="questions__label">All questions</div>
         </b-col>
       </b-row>
       <b-row>
-        <question v-for="(elem, index) in question"
+        <question v-for="(elem, index) in questions"
                   :question="elem.label"
                   :answer="elem.answer"
                   :key="'question' + index"/>
@@ -25,46 +18,37 @@
 </template>
 
 <script>
-    import defaultText from "../../components/defaultText";
-    import question from "../../components/question";
+  import defaultText from "../../components/defaultText";
+  import question from "../../components/question";
+  import arrow from "../../components/arrow";
+  import axios from 'axios'
+  
+  export default {
+    name: "questions",
+    components: {defaultText, question, arrow},
+    async asyncData(param) {
+      const questions = await axiosWrap(axios, param, {
+        method: 'get',
+        url: `${param.store.state.url}/questions`,
+        data: null
+      })
 
-    export default {
-        name: "questions",
-        components: {defaultText, question},
-        data() {
-            return {
-                query: this.$route.query
-            }
-        },
-        computed: {
-            question() {
-                return this.$store.getters.questions
-            }
-        },
-    }
+      return {
+        questions: questions.data
+      }
+    },
+    data() {
+      return {
+        query: this.$route.query
+      }
+    },
+    computed: {
+      
+    },
+  }
 </script>
 
 <style lang="scss" scoped>
-  .arrow {
-    margin: 40px 0;
-    display: flex;
-    align-items: center;
-
-    &__text {
-      font-family: 'Roboto', sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 14px;
-      letter-spacing: 0.02em;
-      color: #828282;
-      margin-left: 10px;
-
-      &:hover {
-        text-decoration: none;
-      }
-    }
-  }
-
   .questions {
     min-height: 100vh;
     background: linear-gradient(125.42deg, #FFFFFF 0%, #DADADA 100%);

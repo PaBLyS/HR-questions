@@ -8,44 +8,56 @@
       </b-button-group>
     </div>
     <div class="edit-question__wrap-bottom">
-      <input type="text" v-model="label" class="edit-question__wrap-input">
+      <input type="text" v-model="edit.label" class="edit-question__wrap-input">
       <p class="edit-question__wrap-content">Content</p>
-      <textarea v-model="answer" class="edit-question__wrap-input textarea"></textarea>
+      <textarea v-model="edit.answer" class="edit-question__wrap-input textarea"></textarea>
     </div>
   </div>
 </template>
 
 <script>
-    export default {
-        name: "question",
-        props: {
-            index: Number,
-            id: Number,
-            label: String,
-            answer: String,
-        },
-        data() {
-            return {}
-        },
-        methods: {
-            editUpload() {
-                this.$store.dispatch('fetchEditQuestions', {
-                    id: this.id,
-                    label: this.label,
-                    answer: this.answer
-                });
 
-            },
-            deleteUpload() {
-                this.$store.dispatch('fetchDeleteQuestions', {
-                    id: this.id,
-                    label: this.label,
-                    answer: this.answer
-                });
+  import axios from 'axios';
 
-            }
+  export default {
+    name: "question",
+    props: {
+      id: Number,
+      label: String,
+      answer: String,
+    },
+    data() {
+      return {
+        edit: {
+          id: this.id,
+          label: this.label,
+          answer: this.answer
         }
+      }
+    },
+    methods: {
+      editUpload() {
+        axiosWrap(axios, this, {
+          method: 'put',
+          url: `${this.$store.state.url}/questions/${this.edit.id}`,
+          data: this.edit
+        })
+          .then(() => console.log('good save'))
+          .catch(err => console.error(err));
+        location.reload()
+      },
+      deleteUpload() {
+        axiosWrap(axios, this, {
+          method: 'delete',
+          url: `${this.$store.state.url}/questions/${this.edit.id}`,
+          data: null
+        })
+          .then(() => console.log('good delete'))
+          .catch(err => console.error(err));
+        location.reload()
+      }
     }
+  }
 </script>
 
 <style lang="scss" scoped>

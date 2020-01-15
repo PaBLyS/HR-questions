@@ -1,7 +1,7 @@
 <template>
     <b-row>
       <b-col cols="12">
-        <div class="text-wrap">{{defaultText}}</div>
+        <div class="text-wrap">{{text}}</div>
       </b-col>
     </b-row>
 </template>
@@ -10,7 +10,7 @@
     export default {
         name: "defaultText",
         props: {
-            defaultText: String
+            text: String
         }
     }
 </script>

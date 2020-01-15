@@ -10,37 +10,52 @@
              type="password"
              class="index__form-input"
              placeholder="Password">
-      <div class="index__form-button"
-           @click="signIn">
-        Login
-      </div>
+      <input class="index__form-button"
+             type="submit"
+             value="Login"
+             @click="signIn">
     </form>
   </section>
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                login: '',
-                password: ''
+  import axios from 'axios'
+
+  export default {
+    data() {
+      return {
+        login: '',
+        password: ''
+      }
+    },
+    computed: {},
+    methods: {
+      signIn(e) {
+        e.preventDefault();
+        axios({
+          method: 'post',
+          url: this.$store.state.url + '/signin',
+          data: {
+            name: this.login,
+            password: this.password
+          }
+        })
+          .then((res) => {
+            setStorage('token', res.data.accessToken);
+            setStorage('refreshToken', res.data.refreshToken);
+            setStorage('access', res.data.access);
+            if (res.data.access) {
+              this.$router.push({path: '/admin'});
+            } else if (!res.data.access) {
+              this.$router.push({path: '/post'});
             }
-        },
-        methods: {
-            signIn() {
-                this.users.forEach((elem) => {
-                    if (this.login === elem.login && this.password === elem.password) {
-                        this.$router.push({path: '/post'});
-                    }
-                });
-            }
-        },
-        computed: {
-            users() {
-                return this.$store.getters.user
-            }
-        }
+          })
+          .catch(() => {
+            alert('Authorization error!');
+          });
+      }
     }
+  }
 </script>
 
 <style lang="scss">
@@ -93,6 +108,7 @@
         align-self: flex-end;
         background: #27AE60;
         border-radius: 10px;
+        border: none;
         font-family: 'Roboto', sans-serif;
         font-style: normal;
         font-weight: 500;
